@@ -40,7 +40,7 @@ impl Game {
 impl Game {
 
   fn menu(&self) -> i8{
-    println!("\n\nWelcome to tic-tac-toe create with Rust");
+    println!("\n\nWelcome to tic-tac-toe created with Rust");
     println!("created by Xima\n");
     println!("actions:");
     println!("0) Quit game");

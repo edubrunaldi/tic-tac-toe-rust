@@ -1,6 +1,6 @@
-mod game;
+extern crate tic_tac_toe_rust;
 
-use game::Game;
+use tic_tac_toe_rust::game::Game;
 
 fn main() {
   let mut game = Game::new();
