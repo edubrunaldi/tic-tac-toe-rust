@@ -1,7 +1,6 @@
 mod board;
-
+mod utils;
 use board::Board;
-use std::io::{stdin,stdout,Write};
 
 pub struct Game {
     player0: i8, // count n plays of player0, player0 always start
@@ -34,16 +33,12 @@ impl Game {
     let player_turn = if self.player0 >= self.player1 {&self.player0} else {&self.player1};
     println!("\n\t It is your turn Player{}\n", player_turn);
     self.board.print_board();
-    let result = self.get_input();
-    println!("result: {}", result);
-  }
-
-  fn get_input(&self) -> String {
-    let mut s=String::new();
-    println!("Insert position X Y (e.g. 1 2)");
-    print!("> ");
-    let _= stdout().flush();
-    stdin().read_line(&mut s).expect("Did not enter a correct string");
-    s
+    let mut result = utils::get_input("Insert position X Y (e.g > 1 2)".to_string());
+    result = result.trim().to_string();
+    while !utils::validate_regex("1 2", &result) {
+      result = utils::get_input(format!("({}) is invalid position, try (> row col, e.g. > 1 2)", result));
+      result = result.trim().to_string();
+    }
+    println!("sucesss");
   }
 }
