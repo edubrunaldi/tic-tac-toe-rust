@@ -3,6 +3,6 @@ mod game;
 use game::Game;
 
 fn main() {
-  let game = Game::new();
+  let mut game = Game::new();
   game.run();
 }

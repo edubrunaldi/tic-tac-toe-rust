@@ -1,10 +1,11 @@
 mod board;
 mod utils;
-use board::Board;
+use board::{Board, Draw};
 
 pub struct Game {
     player0: i8, // count n plays of player0, player0 always start
     player1: i8,
+    finished: bool,
     board: Board
 }
 
@@ -13,15 +14,15 @@ impl Game {
     Game {
         player0: 0,
         player1: 0,
+        finished: false,
         board: Board::new()
     }
   }
 
-  pub fn run(&self) {
-    let mut done = false;
+  pub fn run(&mut self) {
     loop {
-      self.turn_player();
-      if done {
+      self.player_turn();
+      if self.finished {
         break;
       }
     }
@@ -29,7 +30,7 @@ impl Game {
 }
 
 impl Game {
-  fn turn_player(&self) {
+  fn player_turn(&mut self) {
     let player_turn = if self.player0 >= self.player1 {&self.player0} else {&self.player1};
     println!("\n\t It is your turn Player{}\n", player_turn);
     self.board.print_board();
@@ -39,6 +40,13 @@ impl Game {
       result = utils::get_input(format!("({}) is invalid position, try (> row col, e.g. > 1 2)", result));
       result = result.trim().to_string();
     }
-    println!("sucesss");
+    self.do_action(result);
+  }
+
+  fn do_action(&mut self, action: String) {
+    let position: Vec<&str> = action.split_ascii_whitespace().collect();
+    let row: &usize = &position[0].parse::<usize>().unwrap();
+    let col: &usize = &position[1].parse::<usize>().unwrap();
+    self.board.draw(*row, *col, Draw::Circle);
   }
 }
