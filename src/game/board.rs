@@ -56,4 +56,10 @@ impl Board {
     // right to left diagonal
     (self.spaces[2] != ' ' && self.spaces[2] == self.spaces[4] && self.spaces[4] == self.spaces[6] && self.spaces[2] == self.spaces[6]) 
   }
+
+  pub fn reset(&mut self) {
+    for i in &mut self.spaces {
+      *i = ' ';
+    }
+  }
 }

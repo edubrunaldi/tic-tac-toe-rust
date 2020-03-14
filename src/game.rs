@@ -23,6 +23,32 @@ impl Game {
 
   pub fn run(&mut self) {
     loop {
+      let result = self.menu();
+      match result {
+        0 => break,
+        1 => {
+          self.start_game();
+          self.board.reset();
+        },
+        _ => println!("choose between 0 and 1")
+      };
+      
+    }
+  }
+}
+
+impl Game {
+
+  fn menu(&self) -> i8{
+    println!("\n\nWelcome to tic-tac-toe create with Rust");
+    println!("created by Xima\n");
+    println!("actions:");
+    println!("0) Quit game");
+    println!("1) Let's play");
+    utils::get_input("".to_string()).trim().parse::<i8>().unwrap()
+  }
+  fn start_game(&mut self) {
+    loop {
       self.player_turn();
       if self.finished {
         break;
@@ -37,9 +63,7 @@ impl Game {
       println!("\t\n Oh! You guys draw =/");
     }
   }
-}
 
-impl Game {
   fn player_turn(&mut self) {
     let player_turn: i8 = if self.player0 <= self.player1 {0} else {1};
     println!("\n\t It is your turn Player{}\n", player_turn);
